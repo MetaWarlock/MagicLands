@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Slammer : MonoBehaviour
@@ -31,9 +29,6 @@ public class Slammer : MonoBehaviour
             attackCounter -= Time.deltaTime;
         } else
         {
-
-
-
 
         if (Vector3.Distance(slammerTarget.transform.position, PlayerController.instance.transform.position) < distanceToAttackPlayer)
             {

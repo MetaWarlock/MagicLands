@@ -262,6 +262,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: b12f7d5f-1905-46f3-bca7-58c69a0da91f
     m_ActionName: Main/MoveUpDown[/Keyboard/s,/Keyboard/w,/Keyboard/downArrow,/Keyboard/upArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0f94c4a1-43a9-4c71-92d1-629e00f22d89
+    m_ActionName: Main/Attack[/Keyboard/e]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Main

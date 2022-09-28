@@ -12,12 +12,12 @@ public class PlayerController : MonoBehaviour
     public Rigidbody2D theRB;
     private Vector2 moveInput;
 
-    private bool isGrounded, isAttacking = false;
+    [SerializeField] private bool isGrounded, isAttacking = false;
     public Transform groundCheckPoint;
     [SerializeField] private LayerMask whatIsGround;
 
-    private bool canJump;
-    private bool canDoubleJump;
+    [SerializeField]  private bool canJump;
+    [SerializeField]  private bool canDoubleJump;
 
     public Animator anim;
     private SpriteRenderer theSR;
@@ -184,8 +184,10 @@ public class PlayerController : MonoBehaviour
 
     public void Bounce()
     {
-        theRB.velocity = new Vector2(theRB.velocity.x, bounceForce);
+        //theRB.velocity = new Vector2(theRB.velocity.x, bounceForce);
         AudioManager.instance.PlaySFX(8);
+        canDoubleJump = true;    
+
     }
 
     private void Flip()

@@ -5,6 +5,7 @@ using UnityEngine;
 public class BouncePad : MonoBehaviour
 {
     private Animator anim;
+    private PlayerController PlayerController;
 
     public float bounceForce;
 
@@ -12,6 +13,7 @@ public class BouncePad : MonoBehaviour
     void Start()
     {
         anim = GetComponent<Animator>();
+        PlayerController = FindObjectOfType<PlayerController>();
     }
 
     // Update is called once per frame
@@ -26,6 +28,7 @@ public class BouncePad : MonoBehaviour
         {
             PlayerController.instance.theRB.velocity = new Vector2(PlayerController.instance.theRB.velocity.x, bounceForce);
             anim.SetTrigger("Bounce");
+            PlayerController.Bounce();
         }
         
     }

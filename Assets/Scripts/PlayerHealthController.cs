@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerHealthController : MonoBehaviour
@@ -69,6 +67,7 @@ public class PlayerHealthController : MonoBehaviour
             invincibleCounter = invincibleLength;
                 theSR.color = new Color(theSR.color.r, theSR.color.g, theSR.color.b, 0.5f);
 
+                PlayerController.instance.stopAttack();
                 PlayerController.instance.KnockBack();
         }
 

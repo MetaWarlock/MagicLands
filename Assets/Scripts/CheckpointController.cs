@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CheckpointController : MonoBehaviour
@@ -20,14 +18,7 @@ public class CheckpointController : MonoBehaviour
     void Start()
     {
         checkpoints = FindObjectsOfType<Checkpoint>();
-
         spawnPoint = PlayerController.instance.transform.position;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void DeactivateCheckpoints()

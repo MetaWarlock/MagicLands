@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BouncePad : MonoBehaviour
@@ -14,12 +12,6 @@ public class BouncePad : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         PlayerController = FindObjectOfType<PlayerController>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     private void OnTriggerEnter2D(Collider2D other)

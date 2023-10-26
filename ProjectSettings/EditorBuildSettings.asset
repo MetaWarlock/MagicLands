@@ -13,15 +13,18 @@ EditorBuildSettings:
     guid: 488cba7300b3e9446a333b8f17b578d1
   - enabled: 1
     path: Assets/Scenes/02 Swamp Forest.unity
-    guid: b02c2c475d3e5ff4dac6c61fdd07e2b7
+    guid: 0d5ec1ff6858208408fa9a335cb019fc
   - enabled: 1
     path: Assets/Scenes/03 Swamp End.unity
     guid: 8b57adbc20bfc044aaeedbe931f33879
   - enabled: 1
     path: Assets/Scenes/04 Swamp Boss.unity
-    guid: 56fbabb4a5b5d794c902ffece88e837f
+    guid: 2e7a6fd49efa5264a9deb497ecacf19c
   - enabled: 1
     path: Assets/Scenes/Level Select.unity
     guid: 16fef8c957bdf4f48a5ea815f1b6b670
+  - enabled: 1
+    path: Assets/Scenes/Victory Screen.unity
+    guid: 3df33a4e939cbe84ebb07f228f75b046
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 2b597e141973b4142a463b98fcfe6e56, type: 2}

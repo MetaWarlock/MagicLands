@@ -7,7 +7,7 @@ public class LSPlayer : MonoBehaviour
 
     public float moveSpeed;
 
-    private float moveInput;
+    private Vector2 moveInput;
     private float moveUpDown;
 
     private bool levelLoading;
@@ -25,11 +25,11 @@ public class LSPlayer : MonoBehaviour
         {
             if (moveUpDown < 0.5f && moveUpDown > -0.5f)
             {            
-                if (moveInput > 0.5f) if (currentPoint.right != null) SetNextPoint(currentPoint.right);
-                if (moveInput < -0.5f) if (currentPoint.left != null) SetNextPoint(currentPoint.left);
+                if (moveInput.x > 0.5f) if (currentPoint.right != null) SetNextPoint(currentPoint.right);
+                if (moveInput.x < -0.5f) if (currentPoint.left != null) SetNextPoint(currentPoint.left);
             }
 
-            if (moveInput < 0.5f && moveInput > -0.5f)
+            if (moveInput.x < 0.5f && moveInput.x > -0.5f)
             {
                 if (moveUpDown > 0.5f) if (currentPoint.up != null) SetNextPoint(currentPoint.up);
                 if (moveUpDown < -0.5f) if (currentPoint.down != null) SetNextPoint(currentPoint.down);
@@ -52,7 +52,7 @@ public class LSPlayer : MonoBehaviour
 
     public void SetMoveInput(InputAction.CallbackContext context)
     {
-        moveInput = context.ReadValue<float>();
+        moveInput = context.ReadValue<Vector2>();
 
     }
     public void SetMoveUpDown(InputAction.CallbackContext context)

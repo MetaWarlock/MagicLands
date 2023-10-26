@@ -7,6 +7,8 @@ TagManager:
   - Enemy
   - Platform
   - Bouncer
+  - Ground
+  - Attack
   layers:
   - Default
   - TransparentFX
@@ -41,10 +43,10 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: BG
+  - name: Background
     uniqueID: 2089996985
     locked: 0
-  - name: World
+  - name: Ground
     uniqueID: 3690880669
     locked: 0
   - name: Default

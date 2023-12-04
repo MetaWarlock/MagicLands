@@ -15,6 +15,8 @@ public class Player : Entity
     [Header("Move info")]
     [SerializeField] internal float moveSpeed = 8f;
     [SerializeField] internal float jumpForce = 12f;
+    internal bool canDoubleJump;
+    internal int jumpsMade = 0;
 
     [Header("Dash info")]
     [SerializeField] private float dashCooldown;
@@ -153,11 +155,5 @@ public class Player : Entity
 
         }
     }
-
-
-
-
-
-
-
+    
 }

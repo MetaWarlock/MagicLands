@@ -9,6 +9,7 @@ public class Player : Entity
 {
     [Header("Attack details")]
     public float[] attackMovement;
+    public GameObject attackBox;
 
     public bool isBusy {  get; private set; }
     [Header("Move info")]
@@ -93,7 +94,6 @@ public class Player : Entity
     }
 
     public void AnimationTrigger() => stateMachine.currentState.AnimationFinishTrigger();
-
 
     public void SetMoveInput(InputAction.CallbackContext context)
     {

@@ -12,7 +12,7 @@ public class PlayerGroundedState : PlayerState
     {
         base.Enter();
 
-        player.jumpsMade = 0;
+        player.TrackConsecutiveJumps(false);
     }
 
     public override void Exit()
@@ -35,7 +35,6 @@ public class PlayerGroundedState : PlayerState
         if (player.jumpInput && (player.IsGroundDetected() || player.jumpsMade < 2))
         {
             stateMachine.ChangeState(player.jumpState);
-            player.jumpsMade++;
         }
     }
 }

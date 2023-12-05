@@ -15,7 +15,7 @@ public class Player : Entity
     [Header("Move info")]
     [SerializeField] internal float moveSpeed = 8f;
     [SerializeField] internal float jumpForce = 12f;
-    internal bool canDoubleJump;
+    internal bool canDoubleJump = false;
     internal int jumpsMade = 0;
 
     [Header("Dash info")]
@@ -26,7 +26,7 @@ public class Player : Entity
     public float dashDir { get; private set; }
 
 
-
+    private StateUIViewer doubleJumpInfoViewer;
 
 
     #region Input
@@ -68,6 +68,8 @@ public class Player : Entity
 
 
         primaryAttackState   = new PlayerPrimaryAttackState(this, stateMachine, "Attack");
+
+        doubleJumpInfoViewer = GameObject.Find("Double Jump Info")?.GetComponent<StateUIViewer>();
     }
 
     protected override void Start()
@@ -154,6 +156,17 @@ public class Player : Entity
             stateMachine.ChangeState(dashState);
 
         }
+    }
+
+    public void TrackConsecutiveJumps(bool _incrementJumps)
+    {
+        if (_incrementJumps)
+            jumpsMade++;
+        else
+            jumpsMade = 0;
+
+        canDoubleJump = jumpsMade < 2;
+        doubleJumpInfoViewer.UpdateStateUI(canDoubleJump.ToString());
     }
     
 }

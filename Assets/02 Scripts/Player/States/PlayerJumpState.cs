@@ -19,6 +19,8 @@ public class PlayerJumpState : PlayerState
     private void Jump()
     {
         rb.velocity = new Vector2(rb.velocity.x, player.jumpForce);
+
+        player.TrackConsecutiveJumps(true);
     }
 
     public override void Exit()
@@ -41,32 +43,3 @@ public class PlayerJumpState : PlayerState
         }
     }
 }
-
-/* PlayerController 
- *     public void Jump(InputAction.CallbackContext context)
-    {
-        if (canJump) { 
-
-            if (isGrounded) canDoubleJump = true;
-
-            if (context.performed)
-            {
-                if (isGrounded)
-                {
-                    theRB.velocity = new Vector2(theRB.velocity.x, jumpForce);
-                    AudioManager.instance.PlaySFX(10);
-                }
-                else
-                {
-                    if (canDoubleJump)
-                    {
-                        theRB.velocity = new Vector2(theRB.velocity.x, jumpForce);
-                        canDoubleJump = false;
-                        AudioManager.instance.PlaySFX(10);
-                    }
-                }
-            }
-        }
-
-    }
-*/

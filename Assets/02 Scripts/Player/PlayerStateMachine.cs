@@ -5,6 +5,17 @@ using UnityEngine;
 public class PlayerStateMachine
 {
     public PlayerState currentState { get; private set; }
+    private StateUIViewer currentStateInfoViewer;
+
+    public void Awake()
+    {
+        GameObject t = GameObject.Find("Current State Info");
+        if (!t)
+            Debug.Log("Not Found gameObject currentStateInfoViewer");
+        currentStateInfoViewer = t?.GetComponent<StateUIViewer>();
+        if (!currentStateInfoViewer)
+            Debug.Log("Not Found StateUIViewer currentStateInfoViewer");
+    }
 
     public void Initialize(PlayerState _startState)
     {
@@ -17,5 +28,6 @@ public class PlayerStateMachine
         currentState.Exit();
         currentState = _newState;
         currentState.Enter();
+        currentStateInfoViewer.UpdateStateUI(_newState.ToString());
     }
 }

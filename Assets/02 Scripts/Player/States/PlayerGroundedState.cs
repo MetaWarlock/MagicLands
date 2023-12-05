@@ -11,6 +11,8 @@ public class PlayerGroundedState : PlayerState
     public override void Enter()
     {
         base.Enter();
+
+        player.jumpsMade = 0;
     }
 
     public override void Exit()

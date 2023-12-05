@@ -28,6 +28,7 @@ public class PlayerAirState : PlayerState
 
         if (player.IsGroundDetected())
         {
+            Debug.Log("GROUND DETECTED");
             stateMachine.ChangeState(player.idleState);
             player.jumpsMade = 0;
         }

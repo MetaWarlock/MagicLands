@@ -13353,6 +13353,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1590338181405912764, guid: 211518244285bc14e97cf312d2e8ef60, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.1629
+      objectReference: {fileID: 0}
     - target: {fileID: 2788971042091832667, guid: 211518244285bc14e97cf312d2e8ef60, type: 3}
       propertyPath: attackBox
       value: 

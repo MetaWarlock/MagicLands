@@ -5,7 +5,7 @@ public class StateUIViewer : MonoBehaviour
 {
     private TextMeshProUGUI TMPro;
 
-    void Start()
+    private void Awake()
     {
         TMPro = GetComponent<TextMeshProUGUI>();
     }

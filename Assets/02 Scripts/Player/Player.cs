@@ -27,6 +27,7 @@ public class Player : Entity
 
 
     private StateUIViewer doubleJumpInfoViewer;
+    internal StateUIViewer currentStateInfoViewer;
 
 
     #region Input
@@ -47,8 +48,6 @@ public class Player : Entity
     public PlayerAirState airState { get; private set; }
     public PlayerWallSlideState wallSlideState { get; private set; }
     public PlayerDashState dashState { get; private set; }
-
-
     public PlayerPrimaryAttackState primaryAttackState { get; private set; }
     #endregion
 
@@ -56,7 +55,10 @@ public class Player : Entity
     {
         base.Awake();
 
-        stateMachine         = new PlayerStateMachine();
+        doubleJumpInfoViewer = GameObject.Find("Double Jump Info")?.GetComponent<StateUIViewer>();
+        currentStateInfoViewer = GameObject.Find("Current State Info")?.GetComponent<StateUIViewer>();
+
+        stateMachine         = new PlayerStateMachine(this);
 
         idleState            = new PlayerIdleState(this, stateMachine, "Idle");
         moveState            = new PlayerMoveState(this, stateMachine, "Move");
@@ -69,7 +71,6 @@ public class Player : Entity
 
         primaryAttackState   = new PlayerPrimaryAttackState(this, stateMachine, "Attack");
 
-        doubleJumpInfoViewer = GameObject.Find("Double Jump Info")?.GetComponent<StateUIViewer>();
     }
 
     protected override void Start()

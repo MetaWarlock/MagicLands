@@ -11,7 +11,7 @@ public class PlayerGroundedState : PlayerState
     public override void Enter()
     {
         base.Enter();
-
+        player.currentStateInfoViewer.UpdateStateUI("PlayerGroundedState");
         player.TrackConsecutiveJumps(false);
     }
 

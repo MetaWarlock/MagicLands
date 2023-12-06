@@ -13,14 +13,31 @@ public class PlayerJumpState : PlayerState
     {
         base.Enter();
 
-        Jump();
+
+            if (player.canJump)
+            {
+                Jump();
+                player.canJump = false;
+            }
+        else
+        {
+//            Debug.Log("notjump");
+           if (player.canDoubleJump)
+            {
+                Jump();
+                player.canDoubleJump = false;
+            }
+        }
+
+
+
     }
 
     private void Jump()
     {
         rb.velocity = new Vector2(rb.velocity.x, player.jumpForce);
 
-        player.TrackConsecutiveJumps(true);
+//        player.TrackConsecutiveJumps(true);
     }
 
     public override void Exit()

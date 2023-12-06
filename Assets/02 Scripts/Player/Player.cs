@@ -16,8 +16,9 @@ public class Player : Entity
     [Header("Move info")]
     [SerializeField] internal float moveSpeed = 8f;
     [SerializeField] internal float jumpForce = 12f;
-    internal bool canDoubleJump = false;
-    internal int jumpsMade = 0;
+    public bool canJump = true;
+    public bool canDoubleJump = true;
+   // internal int jumpsMade = 0;
 
     [Header("Dash info")]
     [SerializeField] private float dashCooldown;
@@ -88,6 +89,9 @@ public class Player : Entity
         stateMachine.currentState.Update();
 
         CheckForDashInput();
+
+
+        doubleJumpInfoViewer.UpdateStateUI(canDoubleJump.ToString());
     }
 
     public IEnumerator BusyFor(float _seconds)
@@ -108,13 +112,18 @@ public class Player : Entity
 
     public void Jump(InputAction.CallbackContext context)
     {
-        if (context.performed)
+/*        if (context.performed)
         {
             jumpInput = true;
         }
         else
         {
             jumpInput = false;
+        }*/
+
+        if (context.performed && (canJump || canDoubleJump))
+        {
+            stateMachine.ChangeState(jumpState);
         }
     }
 
@@ -160,7 +169,7 @@ public class Player : Entity
         }
     }
 
-    public void TrackConsecutiveJumps(bool _incrementJumps)
+/*    public void TrackConsecutiveJumps(bool _incrementJumps)
     {
         canDoubleJump = jumpsMade + Convert.ToInt32(_incrementJumps) < 2;
 
@@ -169,7 +178,7 @@ public class Player : Entity
         else
             jumpsMade = 0;
 
-        doubleJumpInfoViewer.UpdateStateUI(canDoubleJump.ToString());
-    }
+
+    }*/
     
 }

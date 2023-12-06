@@ -12,7 +12,9 @@ public class PlayerGroundedState : PlayerState
     {
         base.Enter();
         player.currentStateInfoViewer.UpdateStateUI("PlayerGroundedState");
-        player.TrackConsecutiveJumps(false);
+//        player.TrackConsecutiveJumps(false);
+        player.canJump = true;
+        player.canDoubleJump = true;
     }
 
     public override void Exit()
@@ -32,9 +34,6 @@ public class PlayerGroundedState : PlayerState
             stateMachine.ChangeState(player.airState);
         }
 
-        if (player.jumpInput && (player.IsGroundDetected() || player.canDoubleJump))
-        {
-            stateMachine.ChangeState(player.jumpState);
-        }
+
     }
 }

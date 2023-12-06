@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditorInternal;
@@ -161,12 +162,13 @@ public class Player : Entity
 
     public void TrackConsecutiveJumps(bool _incrementJumps)
     {
+        canDoubleJump = jumpsMade + Convert.ToInt32(_incrementJumps) < 2;
+
         if (_incrementJumps)
             jumpsMade++;
         else
             jumpsMade = 0;
 
-        canDoubleJump = jumpsMade < 2;
         doubleJumpInfoViewer.UpdateStateUI(canDoubleJump.ToString());
     }
     

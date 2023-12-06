@@ -12,7 +12,6 @@ public class PlayerGroundedState : PlayerState
     {
         base.Enter();
         player.currentStateInfoViewer.UpdateStateUI("PlayerGroundedState");
-//        player.TrackConsecutiveJumps(false);
         player.canJump = true;
         player.canDoubleJump = true;
     }
@@ -33,7 +32,5 @@ public class PlayerGroundedState : PlayerState
         {
             stateMachine.ChangeState(player.airState);
         }
-
-
     }
 }

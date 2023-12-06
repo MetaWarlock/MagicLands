@@ -28,6 +28,5 @@ public class PlayerMoveState : PlayerGroundedState
         {
             stateMachine.ChangeState(player.idleState);
         }
-
     }
 }

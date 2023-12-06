@@ -18,7 +18,6 @@ public class Player : Entity
     [SerializeField] internal float jumpForce = 12f;
     public bool canJump = true;
     public bool canDoubleJump = true;
-   // internal int jumpsMade = 0;
 
     [Header("Dash info")]
     [SerializeField] private float dashCooldown;
@@ -69,8 +68,6 @@ public class Player : Entity
         airState             = new PlayerAirState(this, stateMachine, "Jump");
         dashState            = new PlayerDashState(this, stateMachine, "Dash");
         wallSlideState       = new PlayerWallSlideState(this, stateMachine, "WallSlide");
-
-
         primaryAttackState   = new PlayerPrimaryAttackState(this, stateMachine, "Attack");
 
     }
@@ -112,15 +109,6 @@ public class Player : Entity
 
     public void Jump(InputAction.CallbackContext context)
     {
-/*        if (context.performed)
-        {
-            jumpInput = true;
-        }
-        else
-        {
-            jumpInput = false;
-        }*/
-
         if (context.performed && (canJump || canDoubleJump))
         {
             stateMachine.ChangeState(jumpState);
@@ -168,17 +156,4 @@ public class Player : Entity
 
         }
     }
-
-/*    public void TrackConsecutiveJumps(bool _incrementJumps)
-    {
-        canDoubleJump = jumpsMade + Convert.ToInt32(_incrementJumps) < 2;
-
-        if (_incrementJumps)
-            jumpsMade++;
-        else
-            jumpsMade = 0;
-
-
-    }*/
-    
 }

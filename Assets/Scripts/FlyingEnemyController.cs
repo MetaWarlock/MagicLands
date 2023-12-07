@@ -1,7 +1,10 @@
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class FlyingEnemyController : MonoBehaviour
 {
+    private Player player;
+
     public Transform[] points;
     public float moveSpeed;
     private int currentPoint;
@@ -10,7 +13,7 @@ public class FlyingEnemyController : MonoBehaviour
 
     public float distanceToAttackPlayer, chaseSpeed;
 
-    private Vector3 attackTarget;
+    private Vector3 attackTargetPosition;
 
     public float waitAfterAttack;
     private float attackCounter;
@@ -18,7 +21,9 @@ public class FlyingEnemyController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        for(int i=0;i<points.Length;i++)
+        player = Player.Instance;
+
+        for (int i=0;i<points.Length;i++)
         {
             points[i].parent = null;
         }
@@ -32,10 +37,10 @@ public class FlyingEnemyController : MonoBehaviour
             attackCounter -= Time.deltaTime;
         }
         else { 
-            if (Vector3.Distance(transform.position, PlayerController.instance.transform.position) > distanceToAttackPlayer)
+            if (Vector3.Distance(transform.position, player.transform.position) > distanceToAttackPlayer)
             {
 
-                attackTarget = Vector3.zero;
+                attackTargetPosition = Vector3.zero;
 
                 transform.position = Vector3.MoveTowards(transform.position, points[currentPoint].position, moveSpeed * Time.deltaTime);
 
@@ -49,13 +54,7 @@ public class FlyingEnemyController : MonoBehaviour
                     }
                 }
 
-                if (transform.position.x < points[currentPoint].position.x)
-                {
-                    theSR.flipX = true;
-                }
-
-                else if (transform.position.x > points[currentPoint].position.x)
-                { theSR.flipX = false; }
+                FlipAnimationDirection(points[currentPoint].position.x);
 
             }
 
@@ -63,19 +62,25 @@ public class FlyingEnemyController : MonoBehaviour
             {
                 //Attacking the Player
 
-                if(attackTarget == Vector3.zero)
+                if(attackTargetPosition == Vector3.zero)
                 {
-                    attackTarget = PlayerController.instance.transform.position;
+                    attackTargetPosition = player.transform.position;
                 }
 
-                transform.position = Vector3.MoveTowards(transform.position, attackTarget, chaseSpeed * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, attackTargetPosition, chaseSpeed * Time.deltaTime);
+                FlipAnimationDirection(attackTargetPosition.x);
 
-                if(Vector3.Distance(transform.position, attackTarget) <= .1f)
+                if (Vector3.Distance(transform.position, attackTargetPosition) <= .1f)
                 {
                     attackCounter = waitAfterAttack;
-                    attackTarget = Vector3.zero;
+                    attackTargetPosition = Vector3.zero;
                 }
             }
-        }
+        }  
+    }
+
+    private void FlipAnimationDirection(float targetPositionX)
+    {
+        theSR.flipX = transform.position.x < targetPositionX;
     }
 }

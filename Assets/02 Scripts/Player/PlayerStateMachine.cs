@@ -7,9 +7,9 @@ public class PlayerStateMachine
     private Player player;
     public PlayerState currentState { get; private set; }
 
-    public PlayerStateMachine(Player _player)
+    public PlayerStateMachine()
     {
-        player = _player;
+        player = Player.Instance;
     }
 
     public void Initialize(PlayerState _startState)

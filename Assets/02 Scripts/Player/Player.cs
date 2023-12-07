@@ -8,6 +8,8 @@ using UnityEngine.InputSystem;
 
 public class Player : Entity
 {
+    public static Player Instance { get; private set; }
+
     [Header("Attack details")]
     public float[] attackMovement;
     public GameObject attackBox;
@@ -56,10 +58,12 @@ public class Player : Entity
     {
         base.Awake();
 
+        Instance = this;
+
         doubleJumpInfoViewer = GameObject.Find("Double Jump Info")?.GetComponent<StateUIViewer>();
         currentStateInfoViewer = GameObject.Find("Current State Info")?.GetComponent<StateUIViewer>();
 
-        stateMachine         = new PlayerStateMachine(this);
+        stateMachine         = new PlayerStateMachine();
 
         idleState            = new PlayerIdleState(this, stateMachine, "Idle");
         moveState            = new PlayerMoveState(this, stateMachine, "Move");
@@ -69,7 +73,6 @@ public class Player : Entity
         dashState            = new PlayerDashState(this, stateMachine, "Dash");
         wallSlideState       = new PlayerWallSlideState(this, stateMachine, "WallSlide");
         primaryAttackState   = new PlayerPrimaryAttackState(this, stateMachine, "Attack");
-
     }
 
     protected override void Start()
@@ -86,7 +89,6 @@ public class Player : Entity
         stateMachine.currentState.Update();
 
         CheckForDashInput();
-
 
         doubleJumpInfoViewer.UpdateStateUI(canDoubleJump.ToString());
     }

@@ -10,17 +10,12 @@ public class PlayerAnimationTriggers : MonoBehaviour
     {
         player.AnimationTrigger();
 
-        ExitAttackState();  // if in it
-    }
-
-    private void ExitAttackState()
-    {
         if (player.attackBox.activeSelf)
-            player.attackBox.SetActive(false);
+            player.ToggleAttackState(false);
     }
 
     private void PrimaryAttackTrigger()
     {
-        player.attackBox.SetActive(true);
+        player.ToggleAttackState(true);
     }
 }

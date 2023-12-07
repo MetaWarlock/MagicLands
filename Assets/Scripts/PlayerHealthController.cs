@@ -25,6 +25,7 @@ public class PlayerHealthController : MonoBehaviour
     void Start()
     {
         player = Player.Instance;
+
         currentHealth = maxHealth;
         playerIsDead = false;
         UIController.instance.UpdateHealthDisplay();
@@ -61,7 +62,7 @@ public class PlayerHealthController : MonoBehaviour
         if (currentHealth <= 0)
         {
                 invincibleCounter = invincibleLength;
-                PlayerController.instance.KnockBack();
+                player.KnockBack();
                 PlayerDeath();
 
         } else
@@ -69,8 +70,8 @@ public class PlayerHealthController : MonoBehaviour
             invincibleCounter = invincibleLength;
                 theSR.color = new Color(theSR.color.r, theSR.color.g, theSR.color.b, 0.5f);
 
-                PlayerController.instance.stopAttack();
-                PlayerController.instance.KnockBack();
+                player.ToggleAttackState(false);
+                player.KnockBack();
         }
 
         UIController.instance.UpdateHealthDisplay();
@@ -99,7 +100,7 @@ public class PlayerHealthController : MonoBehaviour
             UIController.instance.UpdateHealthDisplay();
             AudioManager.instance.PlaySFX(8);
             //gameObject.SetActive(false);
-            PlayerController.instance.stopAttack();
+            player.ToggleAttackState(false);
             LevelManager.instance.RespawnPlayer();
             playerIsDead = true;
         }

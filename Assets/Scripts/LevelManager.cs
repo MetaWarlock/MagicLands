@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager instance;
+    private Player player;
 
     public float waitToRespawn;
 
@@ -22,6 +23,8 @@ public class LevelManager : MonoBehaviour
 
     void Start()
     {
+        player = Player.Instance;
+
         timeInLevel = 0f;
         
     }
@@ -45,16 +48,16 @@ public class LevelManager : MonoBehaviour
 
         UIController.instance.FadeToBlack();
 
-        PlayerController.instance.gameObject.SetActive(false);
-        PlayerController.instance.anim.SetBool("isDead", false);
+        player.gameObject.SetActive(false);
+        player.anim.SetBool("isDead", false);
 
 
 
 
-        PlayerController.instance.gameObject.SetActive(true);
-        
+        player.gameObject.SetActive(true);
 
-        PlayerController.instance.transform.position = CheckpointController.instance.spawnPoint;
+
+        player.transform.position = CheckpointController.instance.spawnPoint;
 
         PlayerHealthController.instance.currentHealth = PlayerHealthController.instance.maxHealth;
 
@@ -76,7 +79,7 @@ public class LevelManager : MonoBehaviour
     {
         AudioManager.instance.PlayLevelVictory();
 
-        PlayerController.instance.stopInput = true;
+        player.stopInput = true;
 
         CameraController.instance.stopFollow = true;
 

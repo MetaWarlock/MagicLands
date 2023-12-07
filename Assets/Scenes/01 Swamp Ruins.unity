@@ -12459,6 +12459,26 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c9c4c6a8aea393643afca0ba103cb521, type: 3}
+--- !u!1 &2055366045 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6411514654144977995, guid: 211518244285bc14e97cf312d2e8ef60, type: 3}
+  m_PrefabInstance: {fileID: 3055375604402630408}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2055366050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2055366045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd2691df19c09114cb710dd1ba4f4f30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHealth: 3
+  maxHealth: 3
+  invincibleLength: 1
 --- !u!1001 &158972457490687713
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13030,6 +13050,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -1.246
       objectReference: {fileID: 0}
+    - target: {fileID: 2788971042091832667, guid: 211518244285bc14e97cf312d2e8ef60, type: 3}
+      propertyPath: knockBackForce
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2788971042091832667, guid: 211518244285bc14e97cf312d2e8ef60, type: 3}
+      propertyPath: knockBackLength
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 6483708506726563069, guid: 211518244285bc14e97cf312d2e8ef60, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -13054,6 +13082,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6411514654144977995, guid: 211518244285bc14e97cf312d2e8ef60, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2055366050}
     - targetCorrespondingSourceObject: {fileID: 7112814221370520292, guid: 211518244285bc14e97cf312d2e8ef60, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3055375604402630412}

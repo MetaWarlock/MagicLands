@@ -8,7 +8,13 @@ using UnityEngine.InputSystem;
 
 public class Player : Entity
 {
+    [Header("Knockback data")]
+    [SerializeField] private float knockBackLength;
+    [SerializeField] private float knockBackForce;
+    private float knockBackCounter;
+
     public static Player Instance { get; private set; }
+    public bool stopInput;
 
     [Header("Attack details")]
     public float[] attackMovement;
@@ -160,5 +166,24 @@ public class Player : Entity
             stateMachine.ChangeState(dashState);
 
         }
+    }
+
+    public void ToggleAttackState(bool _setActive)
+    {
+        attackBox.SetActive(_setActive);
+    }
+
+    public void KnockBack()
+    {
+        knockBackCounter = knockBackLength;
+        rb.velocity = new Vector2(0f, knockBackForce);
+    }
+
+    public void Bounce()
+    {
+        //theRB.velocity = new Vector2(theRB.velocity.x, bounceForce);
+        AudioManager.instance.PlaySFX(8);
+        canDoubleJump = true;
+
     }
 }

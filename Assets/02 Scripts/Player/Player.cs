@@ -111,7 +111,10 @@ public class Player : Entity
     {
         if (context.performed && (canJump || canDoubleJump))
         {
-            stateMachine.ChangeState(jumpState);
+            if (IsWallDetected())
+                stateMachine.ChangeState(wallJumpState);
+            else
+                stateMachine.ChangeState(jumpState);
         }
     }
 

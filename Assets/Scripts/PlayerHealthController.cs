@@ -4,6 +4,7 @@ public class PlayerHealthController : MonoBehaviour
 {
 
     public static PlayerHealthController instance;
+    private Player player;
 
     public int currentHealth, maxHealth;
 
@@ -23,6 +24,7 @@ public class PlayerHealthController : MonoBehaviour
 
     void Start()
     {
+        player = Player.Instance;
         currentHealth = maxHealth;
         playerIsDead = false;
         UIController.instance.UpdateHealthDisplay();

@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Slammer : MonoBehaviour
 {
+    private Player player;
+
     public Transform theSlammer, slammerTarget;
 
     public float slamSpeed, waitAfterSlam, resetSpeed, distanceToAttackPlayer;
@@ -15,8 +17,10 @@ public class Slammer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-//        theSlammer.parent = null;
-       slammerTarget.parent = null;
+        player = Player.Instance;
+
+        //        theSlammer.parent = null;
+        slammerTarget.parent = null;
         originalPosition = transform.position;
 
     }
@@ -30,7 +34,7 @@ public class Slammer : MonoBehaviour
         } else
         {
 
-        if (Vector3.Distance(slammerTarget.transform.position, PlayerController.instance.transform.position) < distanceToAttackPlayer)
+        if (Vector3.Distance(slammerTarget.transform.position, player.transform.position) < distanceToAttackPlayer)
             {
                 if (!playerAttacked) { 
                 transform.position = Vector3.MoveTowards(transform.position, slammerTarget.position, slamSpeed * Time.deltaTime);

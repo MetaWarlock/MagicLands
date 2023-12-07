@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class CheckpointController : MonoBehaviour
 {
+    private Player player;
 
     public static CheckpointController instance;
 
@@ -17,8 +18,9 @@ public class CheckpointController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        checkpoints = FindObjectsOfType<Checkpoint>();
-        spawnPoint = PlayerController.instance.transform.position;
+        player = Player.Instance;
+        checkpoints = Object.FindObjectsByType<Checkpoint>(FindObjectsSortMode.None);
+        spawnPoint = player.transform.position;
     }
 
     public void DeactivateCheckpoints()

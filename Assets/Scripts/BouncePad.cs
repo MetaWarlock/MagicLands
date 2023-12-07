@@ -11,7 +11,7 @@ public class BouncePad : MonoBehaviour
     void Start()
     {
         anim = GetComponent<Animator>();
-        PlayerController = FindObjectOfType<PlayerController>();
+        PlayerController = Object.FindFirstObjectByType<PlayerController>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)

@@ -13058,6 +13058,14 @@ PrefabInstance:
       propertyPath: knockBackLength
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 2788971042091832667, guid: 211518244285bc14e97cf312d2e8ef60, type: 3}
+      propertyPath: whatIsGround.m_Bits
+      value: 320
+      objectReference: {fileID: 0}
+    - target: {fileID: 2788971042091832667, guid: 211518244285bc14e97cf312d2e8ef60, type: 3}
+      propertyPath: playerSlippyMaterial
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6483708506726563069, guid: 211518244285bc14e97cf312d2e8ef60, type: 3}
       propertyPath: m_IsActive
       value: 0

@@ -8,6 +8,8 @@ using UnityEngine.InputSystem;
 
 public class Player : Entity
 {
+    [SerializeField] private PhysicsMaterial2D playerSlippyMaterial;
+
     [Header("Knockback data")]
     [SerializeField] private float knockBackLength;
     [SerializeField] private float knockBackForce;
@@ -185,5 +187,27 @@ public class Player : Entity
         AudioManager.instance.PlaySFX(8);
         canDoubleJump = true;
 
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        Debug.Log("Entered collision");
+        if (other.gameObject.CompareTag("Platform"))
+        {
+            Debug.Log("Entered platform");
+            transform.parent = other.transform;
+            Collider2D collider = GetComponent<Collider2D>();
+            collider.sharedMaterial = null;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Platform"))
+        {
+            transform.parent = null;
+            Collider2D collider = GetComponent<Collider2D>();
+            collider.sharedMaterial = playerSlippyMaterial;
+        }
     }
 }

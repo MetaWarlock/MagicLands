@@ -105,20 +105,4 @@ public class PlayerHealthController : MonoBehaviour
             playerIsDead = true;
         }
     }
-
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        if(other.gameObject.tag == "Platform")
-        {
-            transform.parent = other.transform;
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D other)
-    {
-        if (other.gameObject.tag == "Platform")
-        {
-            transform.parent = null;
-        }
-    }
 }

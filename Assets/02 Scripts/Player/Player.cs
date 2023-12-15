@@ -8,7 +8,6 @@ using UnityEngine.InputSystem;
 
 public class Player : Entity
 {
-    [SerializeField] private PhysicsMaterial2D playerSlippyMaterial;
 
     [Header("Knockback data")]
     [SerializeField] private float knockBackLength;
@@ -196,8 +195,6 @@ public class Player : Entity
         {
             Debug.Log("Entered platform");
             transform.parent = other.transform;
-            Collider2D collider = GetComponent<Collider2D>();
-            collider.sharedMaterial = null;
         }
     }
 
@@ -206,8 +203,6 @@ public class Player : Entity
         if (other.gameObject.CompareTag("Platform"))
         {
             transform.parent = null;
-            Collider2D collider = GetComponent<Collider2D>();
-            collider.sharedMaterial = playerSlippyMaterial;
         }
     }
 }

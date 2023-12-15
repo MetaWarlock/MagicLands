@@ -50,31 +50,31 @@ public class PlayerHealthController : MonoBehaviour
     public void DealDamage()
     {
         if (currentHealth > maxHealth)
-        {
             currentHealth = maxHealth;
-        }
 
-        if (invincibleCounter <= 0) { 
-        //currentHealth -= 1;
-        currentHealth--;
-        AudioManager.instance.PlaySFX(9);
+        if (invincibleCounter <= 0) 
+        { 
+            //currentHealth -= 1;
+            currentHealth--;
+            AudioManager.instance.PlaySFX(9);
 
-        if (currentHealth <= 0)
-        {
+            if (currentHealth <= 0)
+            {
                 invincibleCounter = invincibleLength;
                 player.KnockBack();
                 PlayerDeath();
 
-        } else
-        {
-            invincibleCounter = invincibleLength;
+            } 
+            else
+            {
+                invincibleCounter = invincibleLength;
                 theSR.color = new Color(theSR.color.r, theSR.color.g, theSR.color.b, 0.5f);
 
                 player.ToggleAttackState(false);
                 player.KnockBack();
-        }
+            }
 
-        UIController.instance.UpdateHealthDisplay();
+            UIController.instance.UpdateHealthDisplay();
         }
     }
 
@@ -96,6 +96,7 @@ public class PlayerHealthController : MonoBehaviour
     public void PlayerDeath()
     {
         if (!playerIsDead) {
+            player.anim.SetBool("isDead", true);
             currentHealth = 0;
             UIController.instance.UpdateHealthDisplay();
             AudioManager.instance.PlaySFX(8);

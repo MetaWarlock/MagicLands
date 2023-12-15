@@ -15,7 +15,7 @@ public class KillPlayer : MonoBehaviour
         if (other.tag == "Player")
         {
             player.KnockBack();
-            PlayerHealthController.instance.PlayerDeath();
+            PlayerHealthController.instance.Die();
         }
     }
 }

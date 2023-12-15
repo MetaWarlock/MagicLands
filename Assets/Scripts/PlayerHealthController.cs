@@ -47,7 +47,7 @@ public class PlayerHealthController : MonoBehaviour
         }
     }
 
-    public void DealDamage()
+    public void ReceiveDamage()
     {
         if (currentHealth > maxHealth)
             currentHealth = maxHealth;
@@ -62,7 +62,7 @@ public class PlayerHealthController : MonoBehaviour
             {
                 invincibleCounter = invincibleLength;
                 player.KnockBack();
-                PlayerDeath();
+                Die();
 
             } 
             else
@@ -78,7 +78,7 @@ public class PlayerHealthController : MonoBehaviour
         }
     }
 
-    public void HealPlayer()
+    public void Heal()
     {
         currentHealth++;
         if (currentHealth > maxHealth)
@@ -93,7 +93,7 @@ public class PlayerHealthController : MonoBehaviour
         playerIsDead = false;
     }
 
-    public void PlayerDeath()
+    public void Die()
     {
         if (!playerIsDead) {
             player.anim.SetBool("isDead", true);

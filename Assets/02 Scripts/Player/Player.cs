@@ -1,9 +1,5 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditorInternal;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class Player : Entity
@@ -21,7 +17,7 @@ public class Player : Entity
     public float[] attackMovement;
     public GameObject attackBox;
 
-    public bool isBusy {  get; private set; }
+    public bool isBusy { get; private set; }
     [Header("Move info")]
     [SerializeField] internal float moveSpeed = 8f;
     [SerializeField] internal float jumpForce = 12f;
@@ -35,10 +31,8 @@ public class Player : Entity
     [SerializeField] internal float dashDuration;
     public float dashDir { get; private set; }
 
-
     private StateUIViewer doubleJumpInfoViewer;
     internal StateUIViewer currentStateInfoViewer;
-
 
     #region Input
     public float moveInputX { get; private set; }
@@ -46,8 +40,6 @@ public class Player : Entity
     public bool dashInput { get; private set; }
     public bool attackInput { get; private set; }
     #endregion
-
-
 
     #region States
     public PlayerStateMachine stateMachine { get; private set; }
@@ -70,16 +62,16 @@ public class Player : Entity
         doubleJumpInfoViewer = GameObject.Find("Double Jump Info")?.GetComponent<StateUIViewer>();
         currentStateInfoViewer = GameObject.Find("Current State Info")?.GetComponent<StateUIViewer>();
 
-        stateMachine         = new PlayerStateMachine();
+        stateMachine = new PlayerStateMachine();
 
-        idleState            = new PlayerIdleState(this, stateMachine, "Idle");
-        moveState            = new PlayerMoveState(this, stateMachine, "Move");
-        jumpState            = new PlayerJumpState(this, stateMachine, "Jump");
-        wallJumpState        = new PlayerWallJumpState(this, stateMachine, "Jump");
-        airState             = new PlayerAirState(this, stateMachine, "Jump");
-        dashState            = new PlayerDashState(this, stateMachine, "Dash");
-        wallSlideState       = new PlayerWallSlideState(this, stateMachine, "WallSlide");
-        primaryAttackState   = new PlayerPrimaryAttackState(this, stateMachine, "Attack");
+        idleState = new PlayerIdleState(this, stateMachine, "Idle");
+        moveState = new PlayerMoveState(this, stateMachine, "Move");
+        jumpState = new PlayerJumpState(this, stateMachine, "Jump");
+        wallJumpState = new PlayerWallJumpState(this, stateMachine, "Jump");
+        airState = new PlayerAirState(this, stateMachine, "Jump");
+        dashState = new PlayerDashState(this, stateMachine, "Dash");
+        wallSlideState = new PlayerWallSlideState(this, stateMachine, "WallSlide");
+        primaryAttackState = new PlayerPrimaryAttackState(this, stateMachine, "Attack");
     }
 
     protected override void Start()
@@ -109,7 +101,7 @@ public class Player : Entity
         isBusy = false;
     }
 
-    public void AnimationTrigger() => stateMachine.currentState.AnimationFinishTrigger();
+    public void AnimationFinishTrigger() => stateMachine.currentState.AnimationFinishTrigger();
 
     public void SetMoveInput(InputAction.CallbackContext context)
     {
@@ -151,7 +143,7 @@ public class Player : Entity
         }
     }
 
-    private void CheckForDashInput ()
+    private void CheckForDashInput()
     {
 
         dashUsageTimer -= Time.deltaTime;
@@ -190,10 +182,8 @@ public class Player : Entity
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        Debug.Log("Entered collision");
         if (other.gameObject.CompareTag("Platform"))
         {
-            Debug.Log("Entered platform");
             transform.parent = other.transform;
         }
     }
@@ -205,4 +195,42 @@ public class Player : Entity
             transform.parent = null;
         }
     }
+
+    /*
+    private void CheckDamage()
+    {
+        if (!(knockBackCounter <= 0 & PlayerHealthController.instance.currentHealth > 0))
+        {
+            knockBackCounter -= Time.deltaTime;
+            if (m_FacingRight)
+                rb.velocity = new Vector2(-knockBackForce, rb.velocity.y);
+            else
+                rb.velocity = new Vector2(knockBackForce, rb.velocity.y);
+
+            canJump = false;
+
+            if (PlayerHealthController.instance.currentHealth > 0)
+            {
+                if (knockBackCounter > 0)
+                {
+                    anim.SetBool("isHurt", true);
+                }
+                else
+                {
+                    anim.SetBool("isHurt", false);
+                }
+            }
+            else
+            {
+                if (knockBackCounter > 0)
+                {
+                    anim.SetBool("isDead", true);
+                }
+                else
+                {
+                    PlayerHealthController.instance.Die();
+                }
+            }
+        }
+    } */
 }

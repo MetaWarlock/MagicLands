@@ -99,7 +99,7 @@ public class PlayerController : MonoBehaviour
                 }
                 else
                 {
-                    PlayerHealthController.instance.PlayerDeath();
+                    PlayerHealthController.instance.Die();
                 }
             }
 

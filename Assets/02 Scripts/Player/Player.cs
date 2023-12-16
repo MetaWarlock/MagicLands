@@ -23,6 +23,8 @@ public class Player : Entity
     [SerializeField] internal float jumpForce = 12f;
     public bool canJump = true;
     public bool canDoubleJump = true;
+    private bool isFacingRight = true;
+    private bool isKnocked = false;
 
     [Header("Dash info")]
     [SerializeField] private float dashCooldown;
@@ -87,6 +89,8 @@ public class Player : Entity
 
         stateMachine.currentState.Update();
 
+        knockBackCounter -= Time.deltaTime;
+
         CheckForDashInput();
 
         doubleJumpInfoViewer.UpdateStateUI(canDoubleJump.ToString());
@@ -110,7 +114,7 @@ public class Player : Entity
 
     public void Jump(InputAction.CallbackContext context)
     {
-        if (context.performed && (canJump || canDoubleJump))
+        if (context.performed && (canJump || canDoubleJump) && !isKnocked)
         {
             if (IsWallDetected())
                 stateMachine.ChangeState(wallJumpState);
@@ -168,6 +172,7 @@ public class Player : Entity
 
     public void KnockBack()
     {
+        anim.SetBool("isHurt", knockBackCounter > 0);
         knockBackCounter = knockBackLength;
         rb.velocity = new Vector2(0f, knockBackForce);
     }
@@ -196,29 +201,18 @@ public class Player : Entity
         }
     }
 
-    /*
-    private void CheckDamage()
+
+    private void CheckDamageReceived()
     {
         if (!(knockBackCounter <= 0 & PlayerHealthController.instance.currentHealth > 0))
         {
             knockBackCounter -= Time.deltaTime;
-            if (m_FacingRight)
-                rb.velocity = new Vector2(-knockBackForce, rb.velocity.y);
-            else
-                rb.velocity = new Vector2(knockBackForce, rb.velocity.y);
-
+            rb.velocity = new Vector2(knockBackForce * System.Convert.ToInt32(isFacingRight), rb.velocity.y);
             canJump = false;
 
             if (PlayerHealthController.instance.currentHealth > 0)
             {
-                if (knockBackCounter > 0)
-                {
-                    anim.SetBool("isHurt", true);
-                }
-                else
-                {
-                    anim.SetBool("isHurt", false);
-                }
+                anim.SetBool("isHurt", knockBackCounter > 0);
             }
             else
             {
@@ -232,5 +226,11 @@ public class Player : Entity
                 }
             }
         }
-    } */
+    }
+
+    private void FlipAnimationDirection()
+    {
+        isFacingRight = !isFacingRight;
+        transform.Rotate(0, 180, 0);
+    }
 }

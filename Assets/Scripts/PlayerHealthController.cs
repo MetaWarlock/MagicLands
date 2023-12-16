@@ -25,25 +25,19 @@ public class PlayerHealthController : MonoBehaviour
     void Start()
     {
         player = Player.Instance;
-
         currentHealth = maxHealth;
         playerIsDead = false;
         UIController.instance.UpdateHealthDisplay();
-
         theSR = GetComponent<SpriteRenderer>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (invincibleCounter > 0)
         {
             invincibleCounter -= Time.deltaTime;
             if (invincibleCounter <= 0)
-            {
                 theSR.color = new Color(theSR.color.r, theSR.color.g, theSR.color.b, 1f);
-
-            }
         }
     }
 
@@ -54,7 +48,7 @@ public class PlayerHealthController : MonoBehaviour
 
         if (invincibleCounter <= 0) 
         { 
-            //currentHealth -= 1;
+            player.canJump = false;
             currentHealth--;
             AudioManager.instance.PlaySFX(9);
 

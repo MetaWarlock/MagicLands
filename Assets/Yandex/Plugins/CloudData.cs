@@ -29,7 +29,7 @@ public class CloudData : MonoBehaviour
         {
             DontDestroyOnLoad(gameObject);
             Instance = this;
-            LoadExtern();
+            //LoadExtern();
         }
         else
         {
@@ -46,7 +46,7 @@ public class CloudData : MonoBehaviour
     {
         PlayerInfo.ScoreSumm += gems;
         SetToLeaderboard(PlayerInfo.ScoreSumm);
-        Save();
+        //Save();
     }
 
     public void SetPlayerInfo(string value)

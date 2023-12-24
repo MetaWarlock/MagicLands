@@ -94,6 +94,8 @@ public class Player : Entity
         CheckForDashInput();
 
         doubleJumpInfoViewer.UpdateStateUI(canDoubleJump.ToString());
+
+        CheckDamageReceived();
     }
 
     public IEnumerator BusyFor(float _seconds)

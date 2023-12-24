@@ -13066,6 +13066,10 @@ PrefabInstance:
       propertyPath: playerSlippyMaterial
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 6483708506726563066, guid: 211518244285bc14e97cf312d2e8ef60, type: 3}
+      propertyPath: m_WriteDefaultValuesOnDisable
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6483708506726563069, guid: 211518244285bc14e97cf312d2e8ef60, type: 3}
       propertyPath: m_IsActive
       value: 0

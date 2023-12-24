@@ -11,7 +11,7 @@ public class PlayerHealthController : MonoBehaviour
     public float invincibleLength;
     private float invincibleCounter;
 
-    private bool playerIsDead;
+    public bool playerIsDead;
 
     private SpriteRenderer theSR;
 
@@ -51,22 +51,11 @@ public class PlayerHealthController : MonoBehaviour
             player.canJump = false;
             currentHealth--;
             AudioManager.instance.PlaySFX(9);
+            invincibleCounter = invincibleLength;
+            player.stateMachine.ChangeState(player.hurtState);
 
             if (currentHealth <= 0)
-            {
-                invincibleCounter = invincibleLength;
-                player.KnockBack();
-                Die();
-
-            } 
-            else
-            {
-                invincibleCounter = invincibleLength;
-                theSR.color = new Color(theSR.color.r, theSR.color.g, theSR.color.b, 0.5f);
-
-                player.ToggleAttackState(false);
-                player.KnockBack();
-            }
+                player.stateMachine.ChangeState(player.deadState);
 
             UIController.instance.UpdateHealthDisplay();
         }
@@ -76,28 +65,12 @@ public class PlayerHealthController : MonoBehaviour
     {
         currentHealth++;
         if (currentHealth > maxHealth)
-        {
-            currentHealth=maxHealth;
-        }
+            currentHealth = maxHealth;
         UIController.instance.UpdateHealthDisplay();
     }
 
     public void Ressurect()
     {
         playerIsDead = false;
-    }
-
-    public void Die()
-    {
-        if (!playerIsDead) {
-            player.anim.SetBool("isDead", true);
-            currentHealth = 0;
-            UIController.instance.UpdateHealthDisplay();
-            AudioManager.instance.PlaySFX(8);
-            //gameObject.SetActive(false);
-            player.ToggleAttackState(false);
-            LevelManager.instance.RespawnPlayer();
-            playerIsDead = true;
-        }
     }
 }

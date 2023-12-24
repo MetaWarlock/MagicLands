@@ -85,21 +85,21 @@ public class PlayerController : MonoBehaviour
             if (knockBackCounter > 0)
 
                 {
-                    anim.SetBool("isHurt", true);
+                    anim.SetBool("Hurt", true);
                 }
                 else
                 {
-                    anim.SetBool("isHurt", false);
+                    anim.SetBool("Hurt", false);
                 }
             } else
             {
                 if (knockBackCounter > 0)
                 {
-                    anim.SetBool("isDead", true);
+                    anim.SetBool("Dead", true);
                 }
                 else
                 {
-                    PlayerHealthController.instance.Die();
+                        Debug.Log("PlayerController script is used!");
                 }
             }
 

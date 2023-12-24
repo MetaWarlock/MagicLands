@@ -6,9 +6,9 @@ public class Player : Entity
 {
 
     [Header("Knockback data")]
-    [SerializeField] private float knockBackLength;
-    [SerializeField] private float knockBackForce;
-    private float knockBackCounter;
+    public float knockBackLength;
+    public float knockBackForce;
+    public float knockBackCounter;
 
     public static Player Instance { get; private set; }
     public bool stopInput;
@@ -18,6 +18,7 @@ public class Player : Entity
     public GameObject attackBox;
 
     public bool isBusy { get; private set; }
+    
     [Header("Move info")]
     [SerializeField] internal float moveSpeed = 8f;
     [SerializeField] internal float jumpForce = 12f;
@@ -25,6 +26,7 @@ public class Player : Entity
     public bool canDoubleJump = true;
     private bool isFacingRight = true;
     private bool isKnocked = false;
+    private Controls controls;
 
     [Header("Dash info")]
     [SerializeField] private float dashCooldown;
@@ -53,6 +55,8 @@ public class Player : Entity
     public PlayerWallSlideState wallSlideState { get; private set; }
     public PlayerDashState dashState { get; private set; }
     public PlayerPrimaryAttackState primaryAttackState { get; private set; }
+    public PlayerDeadState deadState { get; private set; }
+    public PlayerHurtState hurtState { get; private set; }
     #endregion
 
     protected override void Awake()
@@ -60,6 +64,7 @@ public class Player : Entity
         base.Awake();
 
         Instance = this;
+        controls = new Controls();
 
         doubleJumpInfoViewer = GameObject.Find("Double Jump Info")?.GetComponent<StateUIViewer>();
         currentStateInfoViewer = GameObject.Find("Current State Info")?.GetComponent<StateUIViewer>();
@@ -74,6 +79,8 @@ public class Player : Entity
         dashState = new PlayerDashState(this, stateMachine, "Dash");
         wallSlideState = new PlayerWallSlideState(this, stateMachine, "WallSlide");
         primaryAttackState = new PlayerPrimaryAttackState(this, stateMachine, "Attack");
+        deadState = new PlayerDeadState(this, stateMachine, "Dead");
+        hurtState = new PlayerHurtState(this, stateMachine, "Hurt");
     }
 
     protected override void Start()
@@ -94,8 +101,6 @@ public class Player : Entity
         CheckForDashInput();
 
         doubleJumpInfoViewer.UpdateStateUI(canDoubleJump.ToString());
-
-        CheckDamageReceived();
     }
 
     public IEnumerator BusyFor(float _seconds)
@@ -172,13 +177,6 @@ public class Player : Entity
         attackBox.SetActive(_setActive);
     }
 
-    public void KnockBack()
-    {
-        anim.SetBool("isHurt", knockBackCounter > 0);
-        knockBackCounter = knockBackLength;
-        rb.velocity = new Vector2(0f, knockBackForce);
-    }
-
     public void Bounce()
     {
         //theRB.velocity = new Vector2(theRB.velocity.x, bounceForce);
@@ -202,37 +200,19 @@ public class Player : Entity
             transform.parent = null;
         }
     }
-
-
-    private void CheckDamageReceived()
-    {
-        if (!(knockBackCounter <= 0 & PlayerHealthController.instance.currentHealth > 0))
-        {
-            knockBackCounter -= Time.deltaTime;
-            rb.velocity = new Vector2(knockBackForce * System.Convert.ToInt32(isFacingRight), rb.velocity.y);
-            canJump = false;
-
-            if (PlayerHealthController.instance.currentHealth > 0)
-            {
-                anim.SetBool("isHurt", knockBackCounter > 0);
-            }
-            else
-            {
-                if (knockBackCounter > 0)
-                {
-                    anim.SetBool("isDead", true);
-                }
-                else
-                {
-                    PlayerHealthController.instance.Die();
-                }
-            }
-        }
-    }
-
     private void FlipAnimationDirection()
     {
         isFacingRight = !isFacingRight;
         transform.Rotate(0, 180, 0);
+    }
+
+    public void DisableUserInput()
+    {
+        controls.Main.Disable();  // Main is the action map responsible for Player movement
+    }
+
+    public void EnableUserInput()
+    {
+        controls.Main.Enable();
     }
 }

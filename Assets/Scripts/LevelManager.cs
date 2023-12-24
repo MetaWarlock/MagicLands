@@ -94,6 +94,8 @@ public class LevelManager : MonoBehaviour
         PlayerPrefs.SetInt (SceneManager.GetActiveScene().name + "_unlocked", 1);
         PlayerPrefs.SetString("CurrentLevel", SceneManager.GetActiveScene().name);
 
+        CloudData.Instance.IncreaseScoreSumm(gemsCollected);
+
         if (PlayerPrefs.HasKey(SceneManager.GetActiveScene().name + "_gems"))
         {
             if (gemsCollected > PlayerPrefs.GetInt(SceneManager.GetActiveScene().name + "_gems"))

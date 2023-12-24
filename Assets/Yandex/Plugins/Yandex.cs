@@ -9,6 +9,7 @@ using UnityEngine.UIElements;
 
 public class Yandex : MonoBehaviour
 {
+    public static Yandex Instance;
 
     [DllImport("__Internal")]
     private static extern void Hello();
@@ -50,6 +51,19 @@ public class Yandex : MonoBehaviour
             Debug.Log(request.error);
         else
             _photo.texture = ((DownloadHandlerTexture)request.downloadHandler).texture;
+    }
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            DontDestroyOnLoad(gameObject);
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
 }

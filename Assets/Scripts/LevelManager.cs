@@ -6,6 +6,7 @@ public class LevelManager : MonoBehaviour
 {
     public static LevelManager instance;
     private Player player;
+    private PlayerStateMachine playerStateMachine;
 
     public float waitToRespawn;
 
@@ -24,6 +25,7 @@ public class LevelManager : MonoBehaviour
     void Start()
     {
         player = Player.Instance;
+        playerStateMachine = new PlayerStateMachine();
 
         timeInLevel = 0f;
         
@@ -43,20 +45,23 @@ public class LevelManager : MonoBehaviour
     private IEnumerator RespawnCo()
     {
 
-
+        Debug.Log("Entered respawn");
         yield return new WaitForSeconds(waitToRespawn - (1f / UIController.instance.fadeSpeed));
 
-        UIController.instance.FadeToBlack();
+        UIController.instance.FadeToBlack(); 
 
         player.gameObject.SetActive(false);
-        player.anim.SetBool("isDead", false);
-
-
-
-
+        //player.anim.SetBool("Dead", false);
+        if (playerStateMachine != null )
+        {
+            Debug.Log("StateMachine");
+            if (player.idleState != null )
+            {
+                Debug.Log("IdleState");
+                playerStateMachine.ChangeState(player.idleState);
+            }
+        }
         player.gameObject.SetActive(true);
-
-
         player.transform.position = CheckpointController.instance.spawnPoint;
 
         PlayerHealthController.instance.currentHealth = PlayerHealthController.instance.maxHealth;
@@ -68,6 +73,7 @@ public class LevelManager : MonoBehaviour
         UIController.instance.FadeFromBlack();
 
         PlayerHealthController.instance.Ressurect();
+        player.EnableUserInput();
     }
 
     public void EndLevel()

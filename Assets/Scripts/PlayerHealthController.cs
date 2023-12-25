@@ -9,7 +9,7 @@ public class PlayerHealthController : MonoBehaviour
     public int currentHealth, maxHealth;
 
     public float invincibleLength;
-    private float invincibleCounter;
+    public float invincibleCounter;
 
     public bool playerIsDead;
 
@@ -72,5 +72,6 @@ public class PlayerHealthController : MonoBehaviour
     public void Ressurect()
     {
         playerIsDead = false;
+        player.EnableUserInput();
     }
 }

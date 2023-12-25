@@ -188,17 +188,13 @@ public class Player : Entity
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Platform"))
-        {
             transform.parent = other.transform;
-        }
     }
 
     private void OnCollisionExit2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Platform"))
-        {
             transform.parent = null;
-        }
     }
     private void FlipAnimationDirection()
     {

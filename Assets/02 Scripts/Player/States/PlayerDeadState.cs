@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditorInternal;
 using UnityEngine;
+using System.Diagnostics;
 
 public class PlayerDeadState : PlayerState
 {
@@ -20,20 +18,24 @@ public class PlayerDeadState : PlayerState
             PlayerHealthController.instance.currentHealth = 0;
             UIController.instance.UpdateHealthDisplay();
             AudioManager.instance.PlaySFX(8);
-            LevelManager.instance.RespawnPlayer();
             PlayerHealthController.instance.playerIsDead = true;
         }
     }
 
     public override void Exit()
     {
-        base.Exit();
-
-        player.EnableUserInput();
+        //base.Exit();
     }
 
     public override void Update()
     {
         base.Update();
+
+        if (isStateAnimationFinished)
+        {
+            UnityEngine.Debug.Log("Trigger called");
+            LevelManager.instance.RespawnPlayer();
+        }
+
     }
 }

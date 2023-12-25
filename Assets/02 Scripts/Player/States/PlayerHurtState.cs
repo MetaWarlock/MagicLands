@@ -28,5 +28,8 @@ public class PlayerHurtState : PlayerState
     public override void Update()
     {
         base.Update();
+
+        if (PlayerHealthController.instance.invincibleCounter <= 0)
+            player.stateMachine.ChangeState(player.idleState);
     }
 }

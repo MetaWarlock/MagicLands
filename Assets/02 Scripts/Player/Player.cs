@@ -116,7 +116,8 @@ public class Player : Entity
 
     public void SetMoveInput(InputAction.CallbackContext context)
     {
-        moveInputX = context.ReadValue<float>();
+        Vector2 input = context.ReadValue<Vector2>();
+        moveInputX = input.x;
     }
 
     public void Jump(InputAction.CallbackContext context)

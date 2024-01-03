@@ -35,7 +35,7 @@ mergeInto(LibraryManager.library, {
   	LoadExtern: function(){
     	player.getData().then(_date => {
         	const myJSON = JSON.stringify(_date);
-        	myGameInstance.SendMessage('Progress', 'SetPlayerInfo', myJSON);
+        	myGameInstance.SendMessage('CloudData', 'SetPlayerInfo', myJSON);
     	});
  	},
 

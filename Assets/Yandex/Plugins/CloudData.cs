@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using TMPro;
 using UnityEngine;
 
 [System.Serializable]
@@ -13,6 +14,8 @@ public class CloudData : MonoBehaviour
     public static CloudData Instance;
 
     public PlayerInfo PlayerInfo;
+
+    [SerializeField] TextMeshProUGUI _playerInfoText;
 
     [DllImport("__Internal")]
     private static extern void SaveExtern(string date);
@@ -29,7 +32,6 @@ public class CloudData : MonoBehaviour
         {
             DontDestroyOnLoad(gameObject);
             Instance = this;
-            //LoadExtern();
         }
         else
         {
@@ -46,11 +48,17 @@ public class CloudData : MonoBehaviour
     {
         PlayerInfo.ScoreSumm += gems;
         SetToLeaderboard(PlayerInfo.ScoreSumm);
-        //Save();
+        Save();
     }
 
     public void SetPlayerInfo(string value)
     {
         PlayerInfo = JsonUtility.FromJson<PlayerInfo>(value);
+        _playerInfoText.text = "scoresumm" + PlayerInfo.ScoreSumm;
+    }
+
+    public void LoadExternButton()
+    {
+        LoadExtern();
     }
 }

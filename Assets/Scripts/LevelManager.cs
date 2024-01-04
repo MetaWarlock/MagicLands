@@ -1,9 +1,13 @@
 using System.Collections;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
+    [DllImport("__Internal")]
+    private static extern void ShowAdv();
+
     public static LevelManager instance;
     private Player player;
 
@@ -120,8 +124,10 @@ public class LevelManager : MonoBehaviour
         {
             PlayerPrefs.SetFloat(SceneManager.GetActiveScene().name + "_time", timeInLevel);
         }
-        
-        
+
+        //INTERSTITIAL ADV
+        PauseManager.Instance.PauseGame();
+        ShowAdv();
 
         SceneManager.LoadScene(levelToLoad);
     }

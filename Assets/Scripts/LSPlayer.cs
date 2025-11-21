@@ -23,7 +23,7 @@ public class LSPlayer : MonoBehaviour
 
         if (Vector3.Distance(transform.position, currentPoint.transform.position) < 0.01f && !levelLoading)
         {
-            if (moveUpDown < 0.5f && moveUpDown > -0.5f)
+            if (moveInput.y < 0.5f && moveInput.y > -0.5f)
             {            
                 if (moveInput.x > 0.5f) if (currentPoint.right != null) SetNextPoint(currentPoint.right);
                 if (moveInput.x < -0.5f) if (currentPoint.left != null) SetNextPoint(currentPoint.left);
@@ -31,8 +31,8 @@ public class LSPlayer : MonoBehaviour
 
             if (moveInput.x < 0.5f && moveInput.x > -0.5f)
             {
-                if (moveUpDown > 0.5f) if (currentPoint.up != null) SetNextPoint(currentPoint.up);
-                if (moveUpDown < -0.5f) if (currentPoint.down != null) SetNextPoint(currentPoint.down);
+                if (moveInput.y > 0.5f) if (currentPoint.up != null) SetNextPoint(currentPoint.up);
+                if (moveInput.y < -0.5f) if (currentPoint.down != null) SetNextPoint(currentPoint.down);
             }
         }
 

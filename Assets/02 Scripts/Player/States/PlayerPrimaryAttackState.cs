@@ -50,7 +50,7 @@ public class PlayerPrimaryAttackState : PlayerState
         if (stateTimer < 0)
             rb.velocity = Vector2.zero;
 
-        if(triggerCalled)
+        if(isStateAnimationFinished)
             stateMachine.ChangeState(player.idleState);
     }
 }

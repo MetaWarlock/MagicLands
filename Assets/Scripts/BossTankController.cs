@@ -152,7 +152,7 @@ public class BossTankController : MonoBehaviour
 
         AudioManager.instance.PlaySFX(0);
 
-        BossTankMine[] mines = FindObjectsOfType<BossTankMine>();
+        BossTankMine[] mines = Object.FindObjectsByType<BossTankMine>(FindObjectsSortMode.None);
 
         if (mines.Length > 0)
         {

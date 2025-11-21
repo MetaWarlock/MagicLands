@@ -10,7 +10,7 @@ public class BossTankMine : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            PlayerHealthController.instance.DealDamage();
+            PlayerHealthController.instance.ReceiveDamage();
 
             Explode();
         }

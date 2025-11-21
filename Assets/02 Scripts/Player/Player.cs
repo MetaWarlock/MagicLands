@@ -1,19 +1,32 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditorInternal;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class Player : Entity
 {
+
+    [Header("Knockback data")]
+    public float knockBackLength;
+    public float knockBackForce;
+    public float knockBackCounter;
+
+    public static Player Instance { get; private set; }
+    public bool stopInput;
+
     [Header("Attack details")]
     public float[] attackMovement;
+    public GameObject attackBox;
 
-    public bool isBusy {  get; private set; }
+    public bool isBusy { get; private set; }
+    
     [Header("Move info")]
     [SerializeField] internal float moveSpeed = 8f;
     [SerializeField] internal float jumpForce = 12f;
+    public bool canJump = true;
+    public bool canDoubleJump = true;
+    private bool isFacingRight = true;
+    private bool isKnocked = false;
+    private Controls controls;
 
     [Header("Dash info")]
     [SerializeField] private float dashCooldown;
@@ -22,9 +35,8 @@ public class Player : Entity
     [SerializeField] internal float dashDuration;
     public float dashDir { get; private set; }
 
-
-
-
+    private StateUIViewer doubleJumpInfoViewer;
+    internal StateUIViewer currentStateInfoViewer;
 
     #region Input
     public float moveInputX { get; private set; }
@@ -32,8 +44,6 @@ public class Player : Entity
     public bool dashInput { get; private set; }
     public bool attackInput { get; private set; }
     #endregion
-
-
 
     #region States
     public PlayerStateMachine stateMachine { get; private set; }
@@ -44,27 +54,33 @@ public class Player : Entity
     public PlayerAirState airState { get; private set; }
     public PlayerWallSlideState wallSlideState { get; private set; }
     public PlayerDashState dashState { get; private set; }
-
-
     public PlayerPrimaryAttackState primaryAttackState { get; private set; }
+    public PlayerDeadState deadState { get; private set; }
+    public PlayerHurtState hurtState { get; private set; }
     #endregion
 
     protected override void Awake()
     {
         base.Awake();
 
-        stateMachine         = new PlayerStateMachine();
+        Instance = this;
+        controls = new Controls();
 
-        idleState            = new PlayerIdleState(this, stateMachine, "Idle");
-        moveState            = new PlayerMoveState(this, stateMachine, "Move");
-        jumpState            = new PlayerJumpState(this, stateMachine, "Jump");
-        wallJumpState        = new PlayerWallJumpState(this, stateMachine, "Jump");
-        airState             = new PlayerAirState(this, stateMachine, "Jump");
-        dashState            = new PlayerDashState(this, stateMachine, "Dash");
-        wallSlideState       = new PlayerWallSlideState(this, stateMachine, "WallSlide");
+        doubleJumpInfoViewer = GameObject.Find("Double Jump Info")?.GetComponent<StateUIViewer>();
+        currentStateInfoViewer = GameObject.Find("Current State Info")?.GetComponent<StateUIViewer>();
 
+        stateMachine = new PlayerStateMachine();
 
-        primaryAttackState   = new PlayerPrimaryAttackState(this, stateMachine, "Attack");
+        idleState = new PlayerIdleState(this, stateMachine, "Idle");
+        moveState = new PlayerMoveState(this, stateMachine, "Move");
+        jumpState = new PlayerJumpState(this, stateMachine, "Jump");
+        wallJumpState = new PlayerWallJumpState(this, stateMachine, "Jump");
+        airState = new PlayerAirState(this, stateMachine, "Jump");
+        dashState = new PlayerDashState(this, stateMachine, "Dash");
+        wallSlideState = new PlayerWallSlideState(this, stateMachine, "WallSlide");
+        primaryAttackState = new PlayerPrimaryAttackState(this, stateMachine, "Attack");
+        deadState = new PlayerDeadState(this, stateMachine, "Dead");
+        hurtState = new PlayerHurtState(this, stateMachine, "Hurt");
     }
 
     protected override void Start()
@@ -80,7 +96,11 @@ public class Player : Entity
 
         stateMachine.currentState.Update();
 
+        knockBackCounter -= Time.deltaTime;
+
         CheckForDashInput();
+
+        doubleJumpInfoViewer.UpdateStateUI(canDoubleJump.ToString());
     }
 
     public IEnumerator BusyFor(float _seconds)
@@ -92,23 +112,22 @@ public class Player : Entity
         isBusy = false;
     }
 
-    public void AnimationTrigger() => stateMachine.currentState.AnimationFinishTrigger();
-
+    public void AnimationFinishTrigger() => stateMachine.currentState.AnimationFinishTrigger();
 
     public void SetMoveInput(InputAction.CallbackContext context)
     {
-        moveInputX = context.ReadValue<float>();
+        Vector2 input = context.ReadValue<Vector2>();
+        moveInputX = input.x;
     }
 
     public void Jump(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.performed && (canJump || canDoubleJump) && !isKnocked)
         {
-            jumpInput = true;
-        }
-        else
-        {
-            jumpInput = false;
+            if (IsWallDetected())
+                stateMachine.ChangeState(wallJumpState);
+            else
+                stateMachine.ChangeState(jumpState);
         }
     }
 
@@ -136,7 +155,7 @@ public class Player : Entity
         }
     }
 
-    private void CheckForDashInput ()
+    private void CheckForDashInput()
     {
 
         dashUsageTimer -= Time.deltaTime;
@@ -154,10 +173,43 @@ public class Player : Entity
         }
     }
 
+    public void ToggleAttackState(bool _setActive)
+    {
+        attackBox.SetActive(_setActive);
+    }
 
+    public void Bounce()
+    {
+        //theRB.velocity = new Vector2(theRB.velocity.x, bounceForce);
+        AudioManager.instance.PlaySFX(8);
+        canDoubleJump = true;
 
+    }
 
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Platform"))
+            transform.parent = other.transform;
+    }
 
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Platform"))
+            transform.parent = null;
+    }
+    private void FlipAnimationDirection()
+    {
+        isFacingRight = !isFacingRight;
+        transform.Rotate(0, 180, 0);
+    }
 
+    public void DisableUserInput()
+    {
+        controls.Main.Disable();  // Main is the action map responsible for Player movement
+    }
 
+    public void EnableUserInput()
+    {
+        controls.Main.Enable();
+    }
 }

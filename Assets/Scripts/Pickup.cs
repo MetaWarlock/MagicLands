@@ -31,7 +31,7 @@ public class Pickup : MonoBehaviour
             if (isHeal == true)
             {
 
-                    PlayerHealthController.instance.HealPlayer();
+                    PlayerHealthController.instance.Heal();
 
                     isCollected = true;
                     Destroy(gameObject);

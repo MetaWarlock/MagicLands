@@ -6,8 +6,16 @@ public class PlayerAnimationTriggers : MonoBehaviour
 {
     private Player player => GetComponentInParent<Player>();
 
-    private void AnimationTrigger()
+    private void AnimationFinishTrigger()
     {
-        player.AnimationTrigger();
+        player.AnimationFinishTrigger();
+
+        if (player.attackBox.activeSelf)
+            player.ToggleAttackState(false);
+    }
+
+    private void PrimaryAttackTrigger()
+    {
+        player.ToggleAttackState(true);
     }
 }

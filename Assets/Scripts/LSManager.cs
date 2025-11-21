@@ -11,7 +11,7 @@ public class LSManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        allPoints = FindObjectsOfType<MapPoint>();
+        allPoints = Object.FindObjectsByType<MapPoint>(FindObjectsSortMode.InstanceID);
 
         if (PlayerPrefs.HasKey("CurrentLevel"))
         {

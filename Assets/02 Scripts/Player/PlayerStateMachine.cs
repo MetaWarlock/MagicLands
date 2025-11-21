@@ -4,7 +4,13 @@ using UnityEngine;
 
 public class PlayerStateMachine
 {
+    private Player player;
     public PlayerState currentState { get; private set; }
+
+    public PlayerStateMachine()
+    {
+        player = Player.Instance;
+    }
 
     public void Initialize(PlayerState _startState)
     {
@@ -16,6 +22,7 @@ public class PlayerStateMachine
     {
         currentState.Exit();
         currentState = _newState;
+        player.currentStateInfoViewer.UpdateStateUI(_newState.ToString());
         currentState.Enter();
     }
 }

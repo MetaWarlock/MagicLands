@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 public class PlayerJumpState : PlayerState
 {
@@ -12,6 +13,23 @@ public class PlayerJumpState : PlayerState
     {
         base.Enter();
 
+        if (player.canJump)
+        {
+            Jump();
+            player.canJump = false;
+        }
+        else
+        {
+           if (player.canDoubleJump)
+           {
+                Jump();
+                player.canDoubleJump = false;
+           }
+        }
+    }
+
+    private void Jump()
+    {
         rb.velocity = new Vector2(rb.velocity.x, player.jumpForce);
     }
 

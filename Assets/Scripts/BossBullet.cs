@@ -21,7 +21,7 @@ public class BossBullet : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            PlayerHealthController.instance.DealDamage();
+            PlayerHealthController.instance.ReceiveDamage();
         }
 
         AudioManager.instance.PlaySFX(1);

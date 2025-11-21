@@ -2,25 +2,26 @@ using UnityEngine;
 
 public class BouncePad : MonoBehaviour
 {
+    private Player player;
     private Animator anim;
-    private PlayerController PlayerController;
 
     public float bounceForce;
 
     // Start is called before the first frame update
     void Start()
     {
+        player = Player.Instance;
+
         anim = GetComponent<Animator>();
-        PlayerController = FindObjectOfType<PlayerController>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.tag == "Player")
         {
-            PlayerController.instance.theRB.velocity = new Vector2(PlayerController.instance.theRB.velocity.x, bounceForce);
+            player.rb.velocity = new Vector2(player.rb.velocity.x, bounceForce);
             anim.SetTrigger("Bounce");
-            PlayerController.Bounce();
+            player.Bounce();
         }
         
     }

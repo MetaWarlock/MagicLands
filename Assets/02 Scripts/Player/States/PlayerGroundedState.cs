@@ -11,6 +11,9 @@ public class PlayerGroundedState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        player.currentStateInfoViewer.UpdateStateUI("PlayerGroundedState");
+        player.canJump = true;
+        player.canDoubleJump = true;
     }
 
     public override void Exit()
@@ -26,11 +29,8 @@ public class PlayerGroundedState : PlayerState
             stateMachine.ChangeState(player.primaryAttackState);
 
         if (!player.IsGroundDetected())
-            stateMachine.ChangeState(player.airState);
-
-        if (player.jumpInput && player.IsGroundDetected())
         {
-            stateMachine.ChangeState(player.jumpState);
+            stateMachine.ChangeState(player.airState);
         }
     }
 }
